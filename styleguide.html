@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Style Guide — Keer Art Gallery</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Internal design system reference for Keer Art Gallery.">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="stylesheet" href="css/style.css">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap">
+<style>
+  .sg-section { padding: 3rem 0; border-bottom: 1px solid var(--gray-border); }
+  .sg-h { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dark); margin-bottom: 1.5rem; font-weight: 600; }
+  .sg-swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap: 1rem; }
+  .sg-swatch { border: 1px solid var(--gray-border); }
+  .sg-swatch .chip { height: 80px; }
+  .sg-swatch .meta { padding: 0.6rem 0.8rem; font-size: 0.74rem; }
+  .sg-swatch .meta b { display: block; font-size: 0.82rem; margin-bottom: 2px; }
+  .sg-row { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+  .sg-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  @media (max-width:760px){ .sg-grid2 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body class="solid-nav">
+<a class="skip-link" href="#main">Skip to content</a>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="assets/logo-gold.png" alt="Keer Art Gallery"><span class="nav-logo-text">Keer</span></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a><a href="works.html">Available Works</a><a href="commissions.html">Commissions</a><a href="pricing.html">Pricing</a><a href="about.html">About</a><a href="contact.html" class="nav-cta">Contact</a>
+    </div>
+    <div class="hamburger" aria-label="Menu"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+<div class="mobile-menu">
+  <a href="index.html">Home</a><a href="works.html">Available Works</a><a href="commissions.html">Commissions</a><a href="pricing.html">Pricing</a><a href="about.html">About</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a>
+</div>
+
+<header class="page-header" id="main">
+  <div class="container">
+    <span class="eyebrow">Design System</span>
+    <h1 class="section-title">Style <span class="italic">Guide</span></h1>
+    <p class="section-desc">A living reference for the Keer Art Gallery brand — colour, type, and components. Internal use.</p>
+  </div>
+</header>
+
+<main class="section">
+  <div class="container">
+
+    <div class="sg-section">
+      <div class="sg-h">Colour</div>
+      <div class="sg-swatches">
+        <div class="sg-swatch"><div class="chip" style="background:#0a0a0a"></div><div class="meta"><b>Black</b>--black · #0a0a0a</div></div>
+        <div class="sg-swatch"><div class="chip" style="background:#161616"></div><div class="meta"><b>Gray dark</b>--gray-dark</div></div>
+        <div class="sg-swatch"><div class="chip" style="background:#c9a24d"></div><div class="meta"><b>Gold</b>--gold · #c9a24d</div></div>
+        <div class="sg-swatch"><div class="chip" style="background:#ddbd72"></div><div class="meta"><b>Gold light</b>--gold-light</div></div>
+        <div class="sg-swatch"><div class="chip" style="background:#a8853a"></div><div class="meta"><b>Gold dark</b>--gold-dark</div></div>
+        <div class="sg-swatch"><div class="chip" style="background:#f4f2ec"></div><div class="meta"><b>Gray light</b>--gray-light</div></div>
+        <div class="sg-swatch"><div class="chip" style="background:#8a8780"></div><div class="meta"><b>Gray mid</b>--gray-mid</div></div>
+        <div class="sg-swatch"><div class="chip" style="background:#ffffff;border:1px solid #e6e3db"></div><div class="meta"><b>White</b>--white</div></div>
+      </div>
+    </div>
+
+    <div class="sg-section">
+      <div class="sg-h">Typography</div>
+      <span class="eyebrow">Eyebrow · Jost</span>
+      <h1 class="hero-title" style="color:var(--black);font-size:3.5rem;margin:0.5rem 0;">Display <span class="gold-word" style="color:var(--gold)">Serif</span></h1>
+      <h2 class="section-title" style="text-align:left">Section Title <span class="italic">Italic Gold</span></h2>
+      <p style="max-width:640px;margin-top:1rem;color:var(--gray-dark)">Body copy is set in Jost at a light weight with generous line-height for readability. Cormorant Garamond carries all display and emphasis moments — titles, prices, and pull quotes.</p>
+    </div>
+
+    <div class="sg-section">
+      <div class="sg-h">Buttons</div>
+      <div class="sg-row" style="background:var(--true-black);padding:2rem;margin-bottom:1rem;">
+        <a class="btn btn-gold">Gold</a>
+        <a class="btn btn-outline-gold">Outline gold</a>
+        <a class="btn btn-light">Light</a>
+      </div>
+      <div class="sg-row">
+        <a class="btn btn-outline-dark">Outline dark</a>
+        <button class="form-submit" style="width:auto;padding:15px 38px">Form submit</button>
+      </div>
+    </div>
+
+    <div class="sg-section">
+      <div class="sg-h">Badges</div>
+      <div class="sg-row" style="position:relative">
+        <span class="badge badge-available" style="position:static">Available</span>
+        <span class="badge badge-sold" style="position:static">Sold</span>
+        <span class="badge badge-original" style="position:static;right:auto">Original</span>
+      </div>
+    </div>
+
+    <div class="sg-section">
+      <div class="sg-h">Form elements</div>
+      <div class="form-grid" style="max-width:680px">
+        <div class="form-group"><label class="form-label" for="sg1">Text input</label><input id="sg1" class="form-input" placeholder="Placeholder"></div>
+        <div class="form-group"><label class="form-label" for="sg2">Select</label><select id="sg2" class="form-select"><option>Option one</option><option>Option two</option></select></div>
+        <div class="form-group form-full"><label class="form-label" for="sg3">Textarea</label><textarea id="sg3" class="form-textarea" placeholder="Message"></textarea></div>
+      </div>
+    </div>
+
+    <div class="sg-section">
+      <div class="sg-h">Artwork card &amp; option button</div>
+      <div class="sg-grid2">
+        <div class="artworks-grid" style="grid-template-columns:1fr">
+          <a class="artwork-card" href="#" onclick="return false">
+            <div class="artwork-visual" style="background:linear-gradient(135deg,#E2DED5,#E2DED5cc)"><span class="badge badge-available">Available</span><span class="badge badge-original" style="right:1.1rem;left:auto">Original</span><span class="artwork-frame-label">ORIGINAL</span><div class="artwork-overlay"><span class="artwork-overlay-btn">View Artwork</span></div></div>
+            <div class="artwork-info"><div class="artwork-title">Sample Piece</div><div class="artwork-meta">Charcoal · 28×30 in · 2024</div><div class="artwork-price-row"><span class="artwork-price">$1,999</span></div></div>
+          </a>
+        </div>
+        <div>
+          <div class="option-grid">
+            <button class="option-btn selected">Selected<small>+$20</small></button>
+            <button class="option-btn">Default<small>Base</small></button>
+          </div>
+          <div class="payment-card" style="margin-top:1.5rem"><div class="payment-card-badge">Badge</div><div class="payment-card-title">Payment card</div><p class="payment-card-desc">Hover for the gold lift interaction.</p></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script src="js/site-data.js"></script>
+<script src="js/components.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>

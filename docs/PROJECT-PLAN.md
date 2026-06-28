@@ -144,12 +144,12 @@ console errors; all links resolve. **Met.**
 - Proper 1200×630 `og-image` per key page; real testimonials; final copy proofread.
 - **Acceptance:** every artwork has a real image; CLS < 0.1; images lazy‑load.
 
-### Phase 3 — Conversion, trust & polish ⏳
-- Per‑artwork pages (deep links + richer SEO) generated from the same data.
-- Sticky “Inquire” bar on mobile; breadcrumbs; related works.
-- `/styleguide.html`; empty/loading/error states; micro‑interactions audit.
-- Cookie/consent banner (if analytics added).
-- **Acceptance:** ≤ 2 taps to enquire from any artwork; styleguide complete.
+### Phase 3 — Conversion, trust & polish 🟡 (core shipped)
+- ✅ Per‑artwork pages (`art-<id>.html`, prerendered; static OG + `VisualArtwork`/`Offer` JSON‑LD; body from data).
+- ✅ Sticky “Inquire” bar on mobile; ✅ breadcrumbs; ✅ related works; ✅ image zoom.
+- ✅ `/styleguide.html` living design system; ✅ empty / `<noscript>` states.
+- ⏳ Cookie/consent banner (only if analytics added); micro‑interactions audit.
+- **Acceptance:** ≤ 2 taps to enquire from any artwork ✅; styleguide complete ✅.
 
 ### Phase 4 — Commerce & payments ⏳
 - **Flutterwave** inline checkout (cards + Mobile Money) per print/original.
@@ -163,11 +163,12 @@ console errors; all links resolve. **Met.**
 - Newsletter wired to a real list (Mailchimp/Buttondown); basic A/B on hero CTA.
 - **Acceptance:** funnel visible end‑to‑end; key events firing.
 
-### Phase 6 — Quality automation & launch ⏳
-- Playwright e2e in CI; HTML validate; broken‑link check; **Lighthouse CI** budgets.
-- Pre‑commit format/lint; PR preview deploys (Netlify/Cloudflare/Pages).
-- Domain + HTTPS; sitemap submitted; social cards validated; backups.
-- **Acceptance:** green CI; Lighthouse ≥ 90×4; live on keermathiang.com.
+### Phase 6 — Quality automation & launch 🟡 (started)
+- ✅ Playwright e2e suite (`tests/e2e.mjs`, 25 checks) + ✅ **GitHub Actions CI**
+  (syntax check, prerender‑drift gate, e2e). ⏳ HTML validate, link check, Lighthouse CI.
+- ⏳ Pre‑commit format/lint; PR preview deploys (Netlify/Cloudflare/Pages).
+- ⏳ Domain + HTTPS; sitemap submitted; social cards validated; backups.
+- **Acceptance:** green CI ✅; Lighthouse ≥ 90×4 ⏳; live on keermathiang.com ⏳.
 
 ---
 
@@ -291,8 +292,9 @@ refresh. Roadmap backlog kept in this doc.
 
 ---
 
-### Appendix A — Phase 1 verification (this build)
-Chromium (Playwright) · 20/20 interactive checks PASS · no runtime console errors:
+### Appendix A — verification (this build)
+Chromium (Playwright) · **25/25** interactive checks PASS (Phase 1 + per‑artwork
+pages) · no runtime console errors:
 featured/works/testimonials/FAQ render; lightbox open/CTA/Esc‑close; filters; live
 pricing ($100 base → $300 Painting+A2 → $360 Rush → “On Request” custom); pricing
 tables + payment cards from data; FAQ accordion; WhatsApp/social fallbacks; dynamic

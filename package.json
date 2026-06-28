@@ -1,0 +1,16 @@
+{
+  "name": "keer-gallery",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Keer Art Gallery — premium static website for original artworks, prints, and commissions.",
+  "type": "module",
+  "scripts": {
+    "serve": "node tools/serve.mjs",
+    "build:art": "node tools/prerender.mjs",
+    "test": "node tests/e2e.mjs",
+    "check": "node --check js/site-data.js && node --check js/components.js && node --check js/script.js"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  }
+}

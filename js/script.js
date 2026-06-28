@@ -51,6 +51,7 @@
     hamburger.setAttribute("aria-expanded", open ? "true" : "false");
     mobileMenu.setAttribute("aria-hidden", open ? "false" : "true");
     document.body.style.overflow = open ? "hidden" : "";
+    if (open) { var first = mobileMenu.querySelector("a"); if (first) first.focus(); }
   }
   if (hamburger) {
     hamburger.setAttribute("role", "button");
@@ -64,12 +65,22 @@
   }
   if (mobileMenu) {
     mobileMenu.setAttribute("id", "mobileMenu");
+    mobileMenu.setAttribute("aria-hidden", "true");
     mobileMenu.querySelectorAll("a").forEach(function (a) {
       a.addEventListener("click", function () { setMenu(false); });
     });
   }
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && mobileMenu && mobileMenu.classList.contains("open")) setMenu(false);
+    if (!mobileMenu || !mobileMenu.classList.contains("open")) return;
+    if (e.key === "Escape") { setMenu(false); if (hamburger) hamburger.focus(); return; }
+    if (e.key === "Tab") {
+      // focus trap within the open menu
+      var links = mobileMenu.querySelectorAll("a");
+      if (!links.length) return;
+      var first = links[0], last = links[links.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
   });
 
   /* ---------- SCROLL REVEAL (covers injected content) ---------- */

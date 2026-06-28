@@ -112,15 +112,15 @@
     return html;
   }
 
-  function cardHTML(a, idx) {
+  function artUrl(a) { return "art-" + a.id + ".html"; }
+
+  function cardHTML(a) {
     var label = (a.type === "print" ? "PRINT" : a.type === "drawing" ? "DRAWING" : "ORIGINAL");
     var frameLabel = a.image ? "" : '<span class="artwork-frame-label">' + esc(label) + "</span>";
-    var overlay = a.status === "sold"
-      ? ""
-      : '<div class="artwork-overlay"><button type="button" class="artwork-overlay-btn" data-view="' + esc(a.id) + '">View</button></div>';
+    var overlay = '<div class="artwork-overlay"><span class="artwork-overlay-btn">' + (a.status === "sold" ? "View" : "View Artwork") + "</span></div>";
     var priceCls = a.status === "sold" ? "artwork-price sold" : "artwork-price";
     return (
-      '<div class="artwork-card reveal" data-type="' + esc(a.type) + '" data-status="' + esc(a.status) + '" data-id="' + esc(a.id) + '">' +
+      '<a class="artwork-card reveal" href="' + esc(artUrl(a)) + '" data-type="' + esc(a.type) + '" data-status="' + esc(a.status) + '" data-id="' + esc(a.id) + '" aria-label="' + esc(a.title) + ' — view details">' +
         '<div class="artwork-visual" style="' + visualStyle(a) + '">' +
           badgeHTML(a) + frameLabel + overlay +
         "</div>" +
@@ -129,22 +129,11 @@
           '<div class="artwork-meta">' + esc([a.medium, a.size, a.year].filter(Boolean).join(" · ")) + "</div>" +
           '<div class="artwork-price-row"><span class="' + priceCls + '">' + esc(priceText(a)) + "</span></div>" +
         "</div>" +
-      "</div>"
+      "</a>"
     );
   }
 
-  function renderGrid(container, items) {
-    container.innerHTML = items.map(cardHTML).join("");
-    all("[data-view]", container).forEach(function (btn) {
-      btn.addEventListener("click", function (e) {
-        e.stopPropagation();
-        openLightbox(btn.getAttribute("data-view"));
-      });
-    });
-    all(".artwork-card", container).forEach(function (c) {
-      c.addEventListener("click", function () { openLightbox(c.getAttribute("data-id")); });
-    });
-  }
+  function renderGrid(container, items) { container.innerHTML = items.map(cardHTML).join(""); }
 
   function renderFeatured() {
     var grid = el("featuredGrid");
@@ -170,66 +159,107 @@
     });
   };
 
-  /* ---------- Lightbox ---------- */
-  function ensureLightbox() {
-    if (el("lightbox")) return;
-    var box = document.createElement("div");
-    box.id = "lightbox";
-    box.className = "lightbox";
-    box.setAttribute("role", "dialog");
-    box.setAttribute("aria-modal", "true");
-    box.setAttribute("aria-hidden", "true");
-    box.innerHTML =
-      '<div class="lightbox-backdrop" data-close></div>' +
-      '<div class="lightbox-panel" role="document">' +
-        '<button class="lightbox-close" data-close aria-label="Close">&times;</button>' +
-        '<div class="lightbox-visual" id="lbVisual"></div>' +
-        '<div class="lightbox-info">' +
-          '<div class="eyebrow" id="lbType"></div>' +
-          '<h3 class="lightbox-title" id="lbTitle"></h3>' +
-          '<p class="lightbox-meta" id="lbMeta"></p>' +
-          '<p class="lightbox-desc" id="lbDesc"></p>' +
-          '<div class="lightbox-price" id="lbPrice"></div>' +
-          '<div class="lightbox-actions" id="lbActions"></div>' +
+  /* ============================================================
+     ARTWORK DETAIL PAGE  (#artworkDetail[data-art-id])
+     ============================================================ */
+  function typeLabel(a) { return a.type === "print" ? "Fine Art Print" : a.type === "drawing" ? "Original Drawing" : "Original Artwork"; }
+
+  function renderArtworkDetail() {
+    var host = el("artworkDetail");
+    if (!host) return;
+    var a = D.artworks.filter(function (x) { return x.id === host.getAttribute("data-art-id"); })[0];
+    if (!a) { host.innerHTML = '<p style="text-align:center;color:var(--gray-mid);">This piece is no longer listed. <a href="works.html" style="color:var(--gold-dark);text-decoration:underline;">Browse available works →</a></p>'; return; }
+
+    var visualStyleStr = "background:linear-gradient(135deg," + a.accent + " 0%," + a.accent + "cc 100%);" +
+      (a.image ? "background-image:url('" + a.image + "');background-size:cover;background-position:center;" : "");
+    var soldOut = a.status === "sold";
+    var inquireHref = contactLink("Hello " + D.business.name + ", I'm interested in \"" + a.title + "\" (" + priceText(a) + "). Is it available?");
+
+    var details = [
+      ["Type", typeLabel(a)],
+      ["Medium", a.medium],
+      ["Size", a.size],
+      ["Year", a.year],
+      ["Status", soldOut ? "Sold" : (a.status === "reserved" ? "Reserved" : "Available")]
+    ].filter(function (r) { return r[1]; });
+
+    host.innerHTML =
+      '<nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a> <span>/</span> <a href="works.html">Works</a> <span>/</span> <span aria-current="page">' + esc(a.title) + "</span></nav>" +
+      '<div class="artwork-detail">' +
+        '<div class="artwork-detail-visual" id="artZoomTrigger" style="' + visualStyleStr + '" role="button" tabindex="0" aria-label="Zoom image">' +
+          badgeHTML(a) + (a.image ? "" : '<span class="artwork-frame-label">' + esc(a.title.toUpperCase()) + "</span>") +
+          '<span class="zoom-hint">Click to zoom</span>' +
+        "</div>" +
+        '<div class="artwork-detail-info">' +
+          '<span class="eyebrow">' + esc(typeLabel(a)) + "</span>" +
+          '<h1 class="artwork-detail-title">' + esc(a.title) + "</h1>" +
+          '<div class="artwork-detail-price ' + (soldOut ? "sold" : "") + '">' + esc(priceText(a)) + "</div>" +
+          (a.description ? '<p class="artwork-detail-desc">' + esc(a.description) + "</p>" : "") +
+          '<dl class="artwork-detail-specs">' + details.map(function (r) {
+            return "<div><dt>" + esc(r[0]) + "</dt><dd>" + esc(r[1]) + "</dd></div>";
+          }).join("") + "</dl>" +
+          '<div class="artwork-detail-actions">' +
+            (soldOut
+              ? '<a href="commissions.html" class="btn btn-gold">Commission Similar</a><a href="works.html" class="btn btn-outline-dark">Browse Available</a>'
+              : '<a href="' + inquireHref + '" target="_blank" rel="noopener" class="btn btn-gold">Inquire / Buy</a><a href="contact.html" class="btn btn-outline-dark">Contact Gallery</a>') +
+          "</div>" +
+          '<p class="artwork-detail-note">Every piece is reviewed and confirmed before payment. Worldwide delivery available — see <a href="shipping.html">Shipping</a> &amp; <a href="pricing.html">Payments</a>.</p>' +
         "</div>" +
       "</div>";
-    document.body.appendChild(box);
-    all("[data-close]", box).forEach(function (b) { b.addEventListener("click", closeLightbox); });
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeLightbox(); });
+
+    renderRelated(a);
+    setupZoom(a);
+    if (!soldOut) injectStickyBar(a, inquireHref);
   }
 
-  function openLightbox(id) {
-    var a = D.artworks.filter(function (x) { return x.id === id; })[0];
-    if (!a) return;
-    ensureLightbox();
-    var v = el("lbVisual");
-    v.setAttribute("style", "background:linear-gradient(135deg," + a.accent + " 0%," + a.accent + "cc 100%);" + (a.image ? "background-image:url('" + a.image + "');background-size:cover;background-position:center;" : ""));
-    v.innerHTML = a.image ? "" : '<span class="artwork-frame-label">' + esc(a.title.toUpperCase()) + "</span>";
-    el("lbType").textContent = (a.type === "print" ? "Fine Art Print" : a.type === "drawing" ? "Original Drawing" : "Original Artwork");
-    el("lbTitle").textContent = a.title;
-    el("lbMeta").textContent = [a.medium, a.size, a.year].filter(Boolean).join(" · ");
-    el("lbDesc").textContent = a.description || "";
-    el("lbPrice").innerHTML = '<span class="' + (a.status === "sold" ? "sold" : "") + '">' + esc(priceText(a)) + "</span>";
-    var actions = el("lbActions");
-    if (a.status === "sold") {
-      actions.innerHTML = '<a href="commissions.html" class="btn btn-gold">Commission Similar</a>';
-    } else {
-      actions.innerHTML =
-        '<a href="' + contactLink("Hello " + D.business.name + ", I'm interested in \"" + a.title + "\" (" + priceText(a) + "). Is it available?") + '" target="_blank" rel="noopener" class="btn btn-gold">Inquire / Buy</a>' +
-        '<a href="contact.html" class="btn btn-outline-dark">Contact Gallery</a>';
-    }
-    var box = el("lightbox");
-    box.classList.add("open");
-    box.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden";
+  function renderRelated(a) {
+    var pool = D.artworks.filter(function (x) { return x.id !== a.id; });
+    var same = pool.filter(function (x) { return x.type === a.type; });
+    var list = (same.concat(pool)).filter(function (v, i, arr) { return arr.indexOf(v) === i; }).slice(0, 3);
+    if (!list.length) return;
+    var sec = document.createElement("section");
+    sec.className = "section related-works";
+    sec.innerHTML =
+      '<div class="container"><div class="section-header"><span class="eyebrow">You May Also Like</span>' +
+      '<h2 class="section-title">More <span class="italic">Works</span></h2></div>' +
+      '<div class="artworks-grid">' + list.map(cardHTML).join("") + "</div></div>";
+    var host = el("artworkDetail").closest("section") || el("artworkDetail");
+    host.parentNode.insertBefore(sec, host.nextSibling);
   }
 
-  function closeLightbox() {
-    var box = el("lightbox");
-    if (!box) return;
-    box.classList.remove("open");
-    box.setAttribute("aria-hidden", "true");
-    document.body.style.overflow = "";
+  function injectStickyBar(a, href) {
+    if (el("stickyInquire")) return;
+    var bar = document.createElement("div");
+    bar.id = "stickyInquire";
+    bar.className = "sticky-inquire";
+    bar.innerHTML =
+      '<div class="sticky-inquire-info"><span class="sticky-inquire-title">' + esc(a.title) + '</span><span class="sticky-inquire-price">' + esc(priceText(a)) + "</span></div>" +
+      '<a href="' + href + '" target="_blank" rel="noopener" class="btn btn-gold">Inquire / Buy</a>';
+    document.body.appendChild(bar);
+  }
+
+  /* ---------- Image zoom (lightbox) ---------- */
+  function setupZoom(a) {
+    var trigger = el("artZoomTrigger");
+    if (!trigger) return;
+    var lastFocus = null;
+    var overlay = document.createElement("div");
+    overlay.className = "img-zoom";
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-modal", "true");
+    overlay.setAttribute("aria-label", a.title);
+    overlay.innerHTML =
+      '<button class="img-zoom-close" aria-label="Close">&times;</button>' +
+      '<div class="img-zoom-stage" style="' + (a.image ? "background-image:url('" + a.image + "');" : "background:linear-gradient(135deg," + a.accent + " 0%," + a.accent + "cc 100%);") + '">' +
+      (a.image ? "" : '<span class="artwork-frame-label">' + esc(a.title.toUpperCase()) + "</span>") + "</div>";
+    document.body.appendChild(overlay);
+    var closeBtn = overlay.querySelector(".img-zoom-close");
+    function open() { lastFocus = document.activeElement; overlay.classList.add("open"); document.body.style.overflow = "hidden"; closeBtn.focus(); }
+    function close() { overlay.classList.remove("open"); document.body.style.overflow = ""; if (lastFocus) lastFocus.focus(); }
+    trigger.addEventListener("click", open);
+    trigger.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
+    overlay.addEventListener("click", function (e) { if (e.target === overlay || e.target === closeBtn) close(); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && overlay.classList.contains("open")) close(); });
   }
 
   /* ============================================================
@@ -532,10 +562,13 @@
     wireLinks();
     renderFeatured();
     renderWorks();
+    renderArtworkDetail();
     renderTestimonials();
     renderFaq();
     renderBuilder();
     renderPricingTables();
+    // a11y: announce form status politely
+    all(".success-msg").forEach(function (s) { s.setAttribute("role", "status"); s.setAttribute("aria-live", "polite"); });
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
