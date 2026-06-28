@@ -7,8 +7,33 @@
 <meta name="description" content="Commission a custom artwork from Keer Art Gallery. Upload your photo, choose options, and see your price update live.">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="stylesheet" href="css/style.css">
+<!-- keer-head -->
+<link rel="canonical" href="https://keermathiang.com/commissions.html">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="author" content="Keer Art Gallery">
+<link rel="apple-touch-icon" href="assets/logo-gold-framed.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Keer Art Gallery">
+<meta property="og:title" content="Commissions — Keer Art Gallery">
+<meta property="og:description" content="Commission a custom artwork from Keer Art Gallery. Upload your photo, choose options, and see your price update live.">
+<meta property="og:url" content="https://keermathiang.com/commissions.html">
+<meta property="og:image" content="https://keermathiang.com/assets/logo-gold-framed.png">
+<meta property="og:image:alt" content="Keer Art Gallery">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Commissions — Keer Art Gallery">
+<meta name="twitter:description" content="Commission a custom artwork from Keer Art Gallery. Upload your photo, choose options, and see your price update live.">
+<meta name="twitter:image" content="https://keermathiang.com/assets/logo-gold-framed.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ArtGallery","name":"Keer Art Gallery","url":"https://keermathiang.com","email":"info@keermathiang.com","image":"https://keermathiang.com/assets/logo-gold-framed.png","logo":"https://keermathiang.com/assets/logo-gold.png","description":"Original and commissioned artworks for collectors, homes, and creative spaces.","address":{"@type":"PostalAddress","addressLocality":"Kampala","addressCountry":"UG"},"areaServed":"Worldwide","priceRange":"$"}
+</script>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 <!-- PRELOADER -->
 <div class="preloader">
   <img src="assets/logo-gold.png" alt="Keer Art Gallery" class="preloader-logo">
@@ -39,9 +64,10 @@
   <a href="commissions.html">Commissions</a>
   <a href="pricing.html">Pricing</a>
   <a href="about.html">About</a>
+  <a href="faq.html">FAQ</a>
   <a href="contact.html">Contact</a>
 </div>
-<header class="page-header">
+<header class="page-header" id="main">
   <img src="assets/logo-gold.png" alt="" class="page-header-mark">
   <div class="container">
     <span class="eyebrow">Custom Artwork</span>
@@ -81,81 +107,54 @@
             <button class="option-btn" onclick="selectOption(this,'subject','business')">Business Artwork</button>
             <button class="option-btn" onclick="selectOption(this,'subject','custom')">Custom Idea</button>
           </div>
-          <textarea class="form-textarea" style="margin-top:1.2rem;" placeholder="Describe what you want drawn — who or what, the style, background details, names, dates, emotions, or special instructions."></textarea>
+          <textarea name="details" class="form-textarea" style="margin-top:1.2rem;" placeholder="Describe what you want drawn — who or what, the style, background details, names, dates, emotions, or special instructions."></textarea>
         </div>
 
         <div class="builder-step reveal">
           <div class="builder-step-label">Step 03</div>
           <div class="builder-step-title">Choose Artwork Style</div>
-          <div class="option-grid">
-            <button class="option-btn" onclick="selectOption(this,'style','Pencil','0')">Pencil Drawing<small>Base price</small></button>
-            <button class="option-btn" onclick="selectOption(this,'style','Charcoal','20')">Charcoal<small>+$20</small></button>
-            <button class="option-btn" onclick="selectOption(this,'style','Colored','40')">Colored Drawing<small>+$40</small></button>
-            <button class="option-btn" onclick="selectOption(this,'style','Digital','50')">Digital Artwork<small>+$50</small></button>
-            <button class="option-btn" onclick="selectOption(this,'style','Painting','80')">Painting<small>+$80</small></button>
-          </div>
+          <div class="option-grid" id="grid-style"></div>
         </div>
 
         <div class="builder-step reveal">
           <div class="builder-step-label">Step 04</div>
           <div class="builder-step-title">Choose Artwork Size</div>
-          <div class="option-grid">
-            <button class="option-btn" onclick="selectOption(this,'size','A4','0')">A4<small>Personal · Base</small></button>
-            <button class="option-btn" onclick="selectOption(this,'size','A3','50')">A3<small>Home · +$50</small></button>
-            <button class="option-btn" onclick="selectOption(this,'size','A2','120')">A2<small>Large · +$120</small></button>
-            <button class="option-btn" onclick="selectOption(this,'size','A1','200')">A1<small>Statement · +$200</small></button>
-            <button class="option-btn" onclick="selectOption(this,'size','Custom','quote')">Custom Size<small>Quote required</small></button>
-          </div>
+          <div class="option-grid" id="grid-size"></div>
         </div>
 
         <div class="builder-step reveal">
           <div class="builder-step-label">Step 05</div>
           <div class="builder-step-title">Number of Subjects</div>
-          <div class="option-grid">
-            <button class="option-btn" onclick="selectOption(this,'subjects','1 person','0')">1 person<small>Base price</small></button>
-            <button class="option-btn" onclick="selectOption(this,'subjects','2 people','30')">2 people<small>+$30</small></button>
-            <button class="option-btn" onclick="selectOption(this,'subjects','3 people','60')">3 people<small>+$60</small></button>
-            <button class="option-btn" onclick="selectOption(this,'subjects','4+ people','quote')">4+ people<small>Custom quote</small></button>
-          </div>
+          <div class="option-grid" id="grid-subjects"></div>
         </div>
 
         <div class="builder-step reveal">
           <div class="builder-step-label">Step 06</div>
           <div class="builder-step-title">Choose Framing</div>
-          <div class="option-grid">
-            <button class="option-btn" onclick="selectOption(this,'frame','No frame','0')">No Frame<small>$0</small></button>
-            <button class="option-btn" onclick="selectOption(this,'frame','Simple black','30')">Simple Black<small>+$30</small></button>
-            <button class="option-btn" onclick="selectOption(this,'frame','Simple white','30')">Simple White<small>+$30</small></button>
-            <button class="option-btn" onclick="selectOption(this,'frame','Premium black','60')">Premium Black<small>+$60</small></button>
-            <button class="option-btn" onclick="selectOption(this,'frame','Premium white','60')">Premium White<small>+$60</small></button>
-          </div>
+          <div class="option-grid" id="grid-frame"></div>
         </div>
 
         <div class="builder-step reveal">
           <div class="builder-step-label">Step 07</div>
           <div class="builder-step-title">Timeline</div>
-          <div class="option-grid">
-            <button class="option-btn" onclick="selectOption(this,'timeline','Standard','0')">Standard<small>No extra cost</small></button>
-            <button class="option-btn" onclick="selectOption(this,'timeline','By date','0')">By Specific Date<small>To be reviewed</small></button>
-            <button class="option-btn" onclick="selectOption(this,'timeline','Rush','20%')">Rush Order<small>+20%</small></button>
-          </div>
+          <div class="option-grid" id="grid-timeline"></div>
         </div>
 
-        <div style="margin-top:3rem;" class="reveal">
+        <form style="margin-top:3rem;" class="reveal" onsubmit="return submitForm('commissionSuccess', event)" novalidate>
           <h3 style="font-family:var(--serif);font-size:1.8rem;margin-bottom:1.8rem;">Your Details</h3>
           <div class="success-msg" id="commissionSuccess">✓ Your commission request has been received. We'll contact you within 24–48 hours to confirm your quote and next steps.</div>
           <div class="form-grid">
-            <div class="form-group"><label class="form-label">Full Name *</label><input type="text" class="form-input" placeholder="Your full name"></div>
-            <div class="form-group"><label class="form-label">Email *</label><input type="email" class="form-input" placeholder="your@email.com"></div>
-            <div class="form-group"><label class="form-label">Phone / WhatsApp</label><input type="tel" class="form-input" placeholder="+256 ..."></div>
-            <div class="form-group"><label class="form-label">City / Country</label><input type="text" class="form-input" placeholder="Kampala, Uganda"></div>
-            <div class="form-group"><label class="form-label">Payment Preference</label><select class="form-select"><option>Discuss first</option><option>Mobile Money (MTN / Airtel)</option><option>Bank Transfer</option><option>Online Payment (Flutterwave)</option></select></div>
-            <div class="form-group"><label class="form-label">Delivery Preference</label><select class="form-select"><option>To be confirmed</option><option>Pickup</option><option>Local Delivery</option><option>National Delivery</option><option>International Shipping</option></select></div>
-            <div class="form-group form-full"><label class="form-label">Additional Instructions</label><textarea class="form-textarea" placeholder="Any other details, special instructions, or questions..."></textarea></div>
-            <div class="form-group form-full"><label class="form-check"><input type="checkbox"> I understand that the displayed price is an estimate and the final price will be confirmed after review.</label></div>
+            <div class="form-group"><label class="form-label" for="cName">Full Name *</label><input id="cName" name="name" type="text" class="form-input" placeholder="Your full name" required></div>
+            <div class="form-group"><label class="form-label" for="cEmail">Email *</label><input id="cEmail" name="email" type="email" class="form-input" placeholder="your@email.com" required></div>
+            <div class="form-group"><label class="form-label" for="cPhone">Phone / WhatsApp</label><input id="cPhone" name="phone" type="tel" class="form-input" placeholder="+256 ..."></div>
+            <div class="form-group"><label class="form-label" for="cCity">City / Country</label><input id="cCity" name="city" type="text" class="form-input" placeholder="Kampala, Uganda"></div>
+            <div class="form-group"><label class="form-label" for="cPay">Payment Preference</label><select id="cPay" name="payment" class="form-select"><option>Discuss first</option><option>Mobile Money (MTN / Airtel)</option><option>Bank Transfer</option><option>Online Payment (Flutterwave)</option></select></div>
+            <div class="form-group"><label class="form-label" for="cDeliver">Delivery Preference</label><select id="cDeliver" name="delivery" class="form-select"><option>To be confirmed</option><option>Pickup</option><option>Local Delivery</option><option>National Delivery</option><option>International Shipping</option></select></div>
+            <div class="form-group form-full"><label class="form-label" for="cMsg">Additional Instructions</label><textarea id="cMsg" name="message" class="form-textarea" placeholder="Any other details, special instructions, or questions..."></textarea></div>
+            <div class="form-group form-full"><label class="form-check"><input type="checkbox" required> I understand that the displayed price is an estimate and the final price will be confirmed after review.</label></div>
           </div>
-          <button class="form-submit" onclick="submitForm('commissionSuccess')">Get My Commission Quote →</button>
-        </div>
+          <button type="submit" class="form-submit">Get My Commission Quote →</button>
+        </form>
       </div>
 
       <aside class="price-sidebar">
@@ -201,6 +200,7 @@
           <li><a href="commissions.html">Commissions</a></li>
           <li><a href="pricing.html">Pricing &amp; Payments</a></li>
           <li><a href="about.html">About</a></li>
+          <li><a href="faq.html">FAQ</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
       </div>
@@ -235,6 +235,8 @@
   <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
 </a>
 
+<script src="js/site-data.js"></script>
+<script src="js/components.js"></script>
 <script src="js/script.js"></script>
 </body>
 </html>

@@ -1,0 +1,15 @@
+{
+  "name": "Keer Art Gallery",
+  "short_name": "Keer",
+  "description": "Original and commissioned artworks for collectors, homes, and creative spaces.",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "icons": [
+    { "src": "assets/favicon.png", "sizes": "64x64", "type": "image/png" },
+    { "src": "assets/logo-gold-framed.png", "sizes": "872x872", "type": "image/png", "purpose": "any" },
+    { "src": "assets/logo-gold-framed.png", "sizes": "872x872", "type": "image/png", "purpose": "maskable" }
+  ]
+}
